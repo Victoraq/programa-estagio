@@ -1,34 +1,70 @@
-# Programa de estágio - 2020-1
+# Programa de estágio AIKO - Teste Back-end
 
-![Aiko](imagens/aiko.png)
+Teste Back-end do programa de estágio AIKO.
 
-O objetivo desta etapa é que você desenvolvedor implemente um dos testes listados a seguir, para que possamos avaliar seu conhecimento técnico em determinada área e a metodologia aplicada no desenvolvimento do teste.
+## Sobre o repositório
 
-Os testes não são restritos a uma tecnologia específica, o objetivo é que você consiga mostrar todo seu conhecimento e potencial como desenvolvedor utilizando as tecnologias que já sabe.
+Esse repositório contém a implementação do teste Back-end do programa de estágio AIKO. Onde foi desenvolvido um clone da API OlhoVivo. Tal aplicação realiza consultas e inserções de dados de Paradas, Linhas, Veículos e suas respectivas posições. Os arquivos são de scripts que representam as seguintes aplicações em containers:
+
+### API - back-end
+
+Aplicação de consulta e inserção de dados de linhas, paradas e veiculos.
+
+Acesso pela porta 8000
+
+### Postgres
+
+Banco de dados utilizado pela API
+
+## Apresentação da API
+
+Neste [link](https://www.youtube.com/watch?v=YlfStR3-YYs) pode ser encontrada a aprensentação em vídeo da API implementada. No vídeo apresento detalhes de infraestrutura, implementação e utilização.
+
+## Instalação
+
+**1.** Build das imagens do ambiente:
+
+```bash
+docker-compose build
+```
+
+**2.** Subir containers:
+
+```bash
+docker-compose up -d
+```
+
+**3.** Verifique se os serviços subiram corretamente:
+
+```bash
+docker ps
+```
+
+E se os containers estiverem rodando corretamente, você irá visualizar uma saída parecida com:
+
+```bash
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+e4ef66e22cea        aiko_backend        "./wait-for-database…"   2 minutes ago       Up 2 minutes        0.0.0.0:8000->8000/tcp   backend
+fd343b14c5ef        postgres            "docker-entrypoint.s…"   2 minutes ago       Up 2 minutes        5432/tcp                 db
+```
 
 ## Testes
 
-Os testes foram separados por "frentes" de desenvolvimento que se encaixam com a divisão do trabalho aplicada na empresa, escolha a que se sentir mais confortável em desenvolver.
+Para verificar se a instalação ocorreu corretamente rode os testes que estão no container backend. Para isso execute o seguinte comando:
 
-* [Front-end](front-end.md)
-* [Back-end](back-end.md)
-* [Android](android.md)
+```bash
+docker exec -it backend python manage.py test
+```
 
-## Entregas
+Se não houver falhas você obterá uma saída parecida com:
 
-Para realizar a entrega do teste você deve:
+```bash
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+...........................................
+----------------------------------------------------------------------
+Ran 43 tests in 1.521s
 
-* Relizar o fork e clonar esse repositório para sua máquina
-  
-* Criar uma branch com o nome de `teste/[TIPO DO TESTE]/[NOME]`
-  * `[TIPO DO TESTE]`: O teste que foi escolhido: `front-end`, `back-end` ou `android`
-  * `[SEU NOME]`: Seu nome
-  * Exemplos: `teste/front-end/fulano`; `teste/android/beltrano`
-  
-* Faça um commit da sua branch com a implementação de algum dos testes
-  
-* Realize o pull request da sua branch nesse repositório
-
-Ficou em dúvida de como fazer um pull request? Talvez este [artigo](https://terminalroot.com.br/2017/12/como-criar-um-pull-request-no-github.html) possa ajudar.
-
-Além do pull request você deve gravar um vídeo de no máximo 30 minutos mostrando o que foi desenvolvido, falando sobre as decisões que foram tomadas, as tecnologias utilizadas, arquitetura e tudo que você achar relevante. A facecam é opcional, mas é sempre um extra. Esse vídeo deve ser postado no youtube (pode ser não listado) e seu link deve estar no `README.md` do projeto.
+OK
+Destroying test database for alias 'default'...
+```

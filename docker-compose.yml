@@ -1,0 +1,33 @@
+version: '3'
+
+services: 
+  db:
+    image: postgres
+    hostname: db
+    container_name: db
+    environment:
+      - POSTGRES_USER=olhovivo
+      - POSTGRES_DB=olhovivo
+      - POSTGRES_PASSWORD=olhovivo123
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+  
+  backend:
+    build: ./backend
+    container_name: backend
+    entrypoint: ["./wait-for-database.sh", "olhovivodb", "/code/entrypoint.sh"]
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - db
+    environment:
+      - POSTGRES_HOST=olhovivodb
+      - POSTGRES_POST=5432
+      - POSTGRES_USER=olhovivo
+      - POSTGRES_PASSWORD=olhovivo123
+      - DEBUG=True
+    links:
+      - db:olhovivodb
+
+volumes:
+  postgresdata:
